@@ -45,7 +45,7 @@ public class PatchFileCheck extends CommitCheck {
             for (Patch patch : diff.patches()) {
                 Path path = patch.target().path().get();
                 if (hasPatchFileSuffix(path)) {
-                    issues.add(new PatchFileIssue(null, metadata));
+                    issues.add(new PatchFileIssue(path, metadata));
                 }
             }
         }
@@ -54,7 +54,7 @@ public class PatchFileCheck extends CommitCheck {
 
     private boolean hasPatchFileSuffix(Path path) {
         for (String suffix : patchFileTypes) {
-            if (path.endsWith(suffix)) {
+            if (path.getFileName().toString().endsWith(suffix)) {
                 return true;
             }
         }

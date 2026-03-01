@@ -91,7 +91,8 @@ public class JCheck {
             new BinaryCheck(),
             new ProblemListsCheck(repository),
             new IssuesTitleCheck(),
-            new CopyrightFormatCheck(repository)
+            new CopyrightFormatCheck(repository),
+            new PatchFileCheck()
         );
         repositoryChecks = List.of(
             new BranchesCheck(allowedBranches),
