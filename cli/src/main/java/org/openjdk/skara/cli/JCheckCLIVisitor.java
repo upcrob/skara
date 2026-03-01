@@ -342,6 +342,14 @@ class JCheckCLIVisitor implements IssueVisitor {
         }
     }
 
+    @Override
+    public void visit(PatchFileIssue i) {
+        if (!ignore.contains(i.check().name())) {
+            println(i, "adds patch file: " + i.path().toString());
+            hasDisplayedErrors = i.severity() == Severity.ERROR;
+        }
+    }
+
     public boolean hasDisplayedErrors() {
         return hasDisplayedErrors;
     }

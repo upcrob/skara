@@ -338,4 +338,11 @@ class PullRequestCheckIssueVisitor implements IssueVisitor {
         addMessage(issue.check(), String.join("\n", messages),
                 issue.severity());
     }
+
+    public void visit(PatchFileIssue issue) {
+        var message = issue.severity().equals(Severity.ERROR) ? String.format("Patch files are not allowed (file: %s)", issue.path())
+                : String.format("Patch contains a patch file (%s)", issue.path());
+        addMessage(issue.check(), message, issue.severity());
+        setNotReadyForReviewOnError(issue.severity());
+    }
 }

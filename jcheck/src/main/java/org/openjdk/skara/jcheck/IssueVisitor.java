@@ -46,4 +46,5 @@ public interface IssueVisitor {
     void visit(ProblemListsIssue problemListIssue);
     void visit(IssuesTitleIssue issuesTitleIssue);
     void visit(CopyrightFormatIssue copyrightFormatIssue);
+    void visit(PatchFileIssue issue);
 }
