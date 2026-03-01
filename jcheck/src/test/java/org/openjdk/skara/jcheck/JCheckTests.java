@@ -248,6 +248,11 @@ class JCheckTests {
             issues.add(e);
         }
 
+        @Override
+        public void visit(PatchFileIssue e) {
+            issues.add(e);
+        }
+
         Set<Issue> issues() {
             return issues;
         }

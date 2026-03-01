@@ -37,6 +37,7 @@ public class ChecksConfiguration {
                                 CommitterConfiguration.DEFAULT,
                                 IssuesConfiguration.DEFAULT,
                                 ProblemListsConfiguration.DEFAULT,
+                                null,
                                 null);
 
     private final List<String> error;
@@ -48,6 +49,7 @@ public class ChecksConfiguration {
     private final IssuesConfiguration issues;
     private final ProblemListsConfiguration problemlists;
     private final CopyrightFormatConfiguration copyright;
+    private final PatchFileCheckConfiguration patchfile;
 
     ChecksConfiguration(List<String> error,
                         List<String> warning,
@@ -57,7 +59,8 @@ public class ChecksConfiguration {
                         CommitterConfiguration committer,
                         IssuesConfiguration issues,
                         ProblemListsConfiguration problemlists,
-                        CopyrightFormatConfiguration copyright) {
+                        CopyrightFormatConfiguration copyright,
+                        PatchFileCheckConfiguration patchfile) {
         this.error = error;
         this.warning = warning;
         this.whitespace = whitespace;
@@ -67,6 +70,7 @@ public class ChecksConfiguration {
         this.issues = issues;
         this.problemlists = problemlists;
         this.copyright = copyright;
+        this.patchfile = patchfile;
     }
 
     public List<String> error() {
@@ -127,6 +131,10 @@ public class ChecksConfiguration {
         return "checks";
     }
 
+    public PatchFileCheckConfiguration patchfile() {
+        return patchfile;
+    }
+
     static ChecksConfiguration parse(Section s) {
         if (s == null) {
             return DEFAULT;
@@ -142,6 +150,7 @@ public class ChecksConfiguration {
         var issues = IssuesConfiguration.parse(s.subsection(IssuesConfiguration.name()));
         var problemlists = ProblemListsConfiguration.parse(s.subsection(ProblemListsConfiguration.name()));
         var copyright = CopyrightFormatConfiguration.parse(s.subsection(CopyrightFormatConfiguration.name()));
-        return new ChecksConfiguration(error, warning, whitespace, reviewers, merge, committer, issues, problemlists, copyright);
+        var patchfile = PatchFileCheckConfiguration.parse(s.subsection(PatchFileCheckConfiguration.name()));
+        return new ChecksConfiguration(error, warning, whitespace, reviewers, merge, committer, issues, problemlists, copyright, patchfile);
     }
 }
