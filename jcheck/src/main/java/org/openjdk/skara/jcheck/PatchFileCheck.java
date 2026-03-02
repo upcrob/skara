@@ -33,12 +33,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
 
 public class PatchFileCheck extends CommitCheck {
-    private final Set<String> patchFileTypes = Set.of(".orig", ".rej");
+    private final Set<String> patchFileTypes = new HashSet<>();
 
     @Override
     Iterator<Issue> check(Commit commit, CommitMessage message, JCheckConfiguration conf, Census census) {
+        patchFileTypes.addAll(Arrays.asList(conf.checks().patchfile().fileTypes().split(",")));
         CommitIssue.Metadata metadata = CommitIssue.metadata(commit, message, conf, this);
         List<Issue> issues = new ArrayList<>();
         for (Diff diff : commit.parentDiffs()) {
